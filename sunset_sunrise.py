@@ -20,7 +20,12 @@ def trigger_sunset(h):
             ret = h.set_light(light_id, 'bri', str(brightness))
             print(ret)
             print(h.get_light(light_id, 'bri'))
-        time.sleep(10)
+        time.sleep(8)
+
+def debug_all_on(brightness=256):
+    for light_id in h.get_lights('id'):
+        h.set_light(light_id, 'on', 'true')
+        ret = h.set_light(light_id, 'bri', str(brightness))
 
 def sunset(h):
 
@@ -30,8 +35,11 @@ def sunset(h):
         if sunset_trigger_active:
             trigger_sunset(h)
             sunset_trigger_active = False
-        #    city = lookup("Hamburg", database())
-        city = astral.LocationInfo("Hamburg", "Germany", "Europe/Berlin", 53.551086, 9.993682)
+        #    city = lookup("Hamburg", database())i
+        # Hamubrg: 53.551086, 9.993682
+        # Frankfurt 50.11552000, 8.68417000
+
+        city = astral.LocationInfo("Frankfurt am Main", "Germany", "Europe/Berlin", 50.11552000, 8.68417000)
         print((
         f"Information for {city.name}/{city.region}\n"
         f"Timezone: {city.timezone}\n"
@@ -74,7 +82,7 @@ user = 'turtlemaster'
 user_hash = '1kPwBL7ioc1WgXz020bqooSwgiRK-o36A-px5RDj'
 
 #setup bridge
-h = Hue('Philips-hue.fritz.box', user_hash)
+h = Hue('192.168.0.20', user_hash)
 
 #to check the connection to the bridge use:
 ret = h.checkup()                     #returns 0 if connection and username OK

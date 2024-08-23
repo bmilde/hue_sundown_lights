@@ -16,7 +16,7 @@ user = 'turtlemaster'
 user_hash = '1kPwBL7ioc1WgXz020bqooSwgiRK-o36A-px5RDj'
 
 #setup bridge
-h = Hue('Philips-hue.fritz.box', user_hash)
+h = Hue('192.168.0.20', user_hash)
 
 #to check the connection to the bridge use:
 ret = h.checkup()                     #returns 0 if connection and username OK
