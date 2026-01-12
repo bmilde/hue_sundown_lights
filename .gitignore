@@ -1,0 +1,10 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Log files
+*.log
+
+# Config (optional - uncomment if you don't want to commit credentials)
+# config.yaml

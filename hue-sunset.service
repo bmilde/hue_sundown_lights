@@ -1,0 +1,22 @@
+[Unit]
+Description=Philips Hue Sunset Automation
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=me
+Group=me
+WorkingDirectory=/home/me/hue_control
+ExecStart=/usr/bin/python3 /home/me/hue_control/hue_control.py --mode sunset
+Restart=always
+RestartSec=10
+StandardOutput=append:/home/me/hue_control/sunset.log
+StandardError=append:/home/me/hue_control/sunset.log
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

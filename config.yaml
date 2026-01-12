@@ -1,0 +1,17 @@
+hue:
+  bridge_ip: "192.168.0.20"
+  username: "turtlemaster"
+  user_hash: "1kPwBL7ioc1WgXz020bqooSwgiRK-o36A-px5RDj"
+
+location:
+  city: "Frankfurt am Main"
+  country: "Germany"
+  timezone: "Europe/Berlin"
+  latitude: 50.11552000
+  longitude: 8.68417000
+
+rooms:
+  wohnzimmer: ["sofa", "ess"]
+  wohnzimmer2: ["sofa", "ess", "musch", "kleine"]
+  schlafzimmer: ["schlaf"]
+  shell: ["muschel", "kleine"]
