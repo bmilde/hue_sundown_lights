@@ -62,12 +62,39 @@ def set_light_properties(hue, light_id, brightness, hue_value, saturation):
 def trigger_sunset(hue, min_brightness, max_brightness):
     """Trigger sunset mode, gradually increasing brightness."""
     logging.info('TURN THE LIGHT ON! :)')
+
+    # Track which lights have been manually overridden
+    skipped_lights = set()
+    # Track expected brightness for each light
+    expected_brightness = {}
+
     for brightness in range(min_brightness, max_brightness):
         for light_id in hue.get_lights('id'):
             light_name = hue.get_light(light_id, 'name')
+
+            # Skip this light if it was manually overridden
+            if light_id in skipped_lights:
+                logging.info(f'Skipping {light_name} (manually overridden)')
+                continue
+
+            # If we previously set this light, check if it was manually changed
+            if light_id in expected_brightness:
+                current_brightness = int(hue.get_light(light_id, 'bri'))
+                expected = expected_brightness[light_id]
+
+                # If brightness differs significantly from what we set, user overrode it
+                if abs(current_brightness - expected) > 5:  # 5 unit tolerance
+                    logging.info(f'Manual override detected for {light_name}: '
+                               f'expected {expected}, found {current_brightness}. '
+                               f'Skipping this light for remainder of sunset.')
+                    skipped_lights.add(light_id)
+                    continue
+
             logging.info(f'Setting brightness for {light_name} to {brightness}')
             set_light_properties(hue, light_id, brightness, None, None)
+            expected_brightness[light_id] = brightness
             logging.debug(f'Current brightness: {hue.get_light(light_id, "bri")}')
+
         time.sleep(8)
 
 def debug_all_on(hue, brightness=256):
